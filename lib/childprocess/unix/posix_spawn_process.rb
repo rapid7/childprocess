@@ -34,11 +34,8 @@ module ChildProcess
           actions.add_close fileno_for(writer)
         end
 
-        if defined? Platform::POSIX_SPAWN_USEVFORK
-          flags |= Platform::POSIX_SPAWN_USEVFORK
-        end
-
-        attrs.flags = flags
+        attrs.flags = flags | Platform::POSIX_SPAWN_SETPGROUP
+        attrs.flags |= Platform::POSIX_SPAWN_USEVFORK if defined? Platform::POSIX_SPAWN_USEVFORK
 
         # wrap in helper classes in order to avoid GC'ed pointers
         argv = Argv.new(@args)
