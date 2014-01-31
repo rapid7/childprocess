@@ -210,4 +210,18 @@ describe ChildProcess do
       Dir.pwd.should == orig_pwd
     }
   end
+
+  it 'kills the full process tree' do
+    Tempfile.open('kill-process-tree') do |file|
+      process = write_pid_in_grand_child(file.path).start
+
+      pid = within(5) do
+        file.rewind
+        Integer(file.read) rescue nil
+      end
+
+      process.stop
+      fail "grand child still alive" if alive?(pid)
+    end
+  end
 end
