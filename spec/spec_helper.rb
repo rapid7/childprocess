@@ -259,4 +259,3 @@ RSpec.configure do |c|
   end
 end
 
-Tested-by: Jari Bakken <jari.bakken@gmail.com>
