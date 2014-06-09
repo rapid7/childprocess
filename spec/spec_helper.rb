@@ -167,6 +167,13 @@ module ChildProcessSpecHelper
     end
   end
 
+  def with_debug_output(&blk)
+    $DEBUG = true
+    yield
+  ensure
+    $DEBUG = false
+  end
+
   def wait_until(timeout = 10, &blk)
     end_time       = Time.now + timeout
     last_exception = nil
@@ -251,3 +258,5 @@ RSpec.configure do |c|
     c.filter_run_excluding :posix_spawn_on_linux => false
   end
 end
+
+Tested-by: Jari Bakken <jari.bakken@gmail.com>

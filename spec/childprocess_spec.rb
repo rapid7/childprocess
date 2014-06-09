@@ -170,12 +170,14 @@ describe ChildProcess do
   end
 
   it 'handles whitespace in the executable name' do
-    path = File.expand_path('foo bar')
+    with_debug_output { 
+      path = File.expand_path('foo bar')
 
-    with_executable_at(path) do |proc|
-      expect(proc.start).to eq proc
-      expect(proc).to be_alive
-    end
+      with_executable_at(path) do |proc|
+        expect(proc.start).to eq proc
+        expect(proc).to be_alive
+      end
+    }
   end
 
   it "times out when polling for exit" do
